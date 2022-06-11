@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Text pipe filter to remove lines ending in any of the chosen chars given as input parameter
+
+if [ -p /dev/stdin ]; then  # don't hang if input is empty
+
+	#check_input
+	if [ $# -lt 1 ]; then
+			echo "Input parameters expected. Specify ending characters of the lines not to return."
+			echo "./(command) (string with unwanted ending chars)"
+			exit
+	fi
+
+	CHARSNOTTOEND=$1
+
+	while IFS= read line; do
+		match="false"
+		lastCharInPipe=${line: -1}
+		for (( i=0; i<${#CHARSNOTTOEND}; i++ )); do
+			if [ "${CHARSNOTTOEND:$i:1}" == "$lastCharInPipe" ]; then
+				match="true"
+				break
+			fi
+		done
+		if [ $match == "false" ]; then  # print line if there has been no matching char 
+			echo "$line"
+		fi
+	done
+fi 

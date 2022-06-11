@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Text pipe filter to remove lines starting with any of the chosen chars given as input parameter
+
+if [ -p /dev/stdin ]; then  # don't hang if input is empty
+
+	#check_input
+	if [ $# -lt 1 ]; then
+			echo "Input parameters expected. Specify starting characters of the lines not to return."
+			echo "./(command) (string with unwanted starting chars)"
+			exit
+	fi
+
+	CHARSNOTTOSTART=$1
+
+	while IFS= read line; do
+		match="false"
+		firstCharInPipe=${line::1}
+		for (( i=0; i<${#CHARSNOTTOSTART}; i++ )); do
+			if [ "${CHARSNOTTOSTART:$i:1}" == "$firstCharInPipe" ]; then
+				match="true"
+				break
+			fi
+		done
+		if [ $match == "false" ]; then  # print line if there has been no matching char 
+			echo "$line"
+		fi
+	done
+fi 
