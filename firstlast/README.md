@@ -3,4 +3,4 @@ Text pipe filter to remove or keep lines according to first or last character.
 
 ## how-to
 Example:
-```echo "Test" | firstis tT | lastisnot xyz```
+```echo "Test" | firstisanyof tT | lastisnotanyof xyz```
