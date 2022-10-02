@@ -46,6 +46,6 @@ if [ $? != 0 ]; then
 }
 else
     echo "Compressed tarball successfully created:"
-    echo "$destination_folder/$tarball_name_$now.tar.bz2"
+    echo "$destination_folder/$tarballname_$now.tar.bz2"
 fi
 
